@@ -19,23 +19,27 @@ if [[ -z "$VOC1_INPUT_TEXT_PATH" ]]
 		echo "input the path to the input text file and press enter"
 		read VOC1_INPUT_TEXT_PATH_ORIG
 		# when copying a file in the dolphin file manager and then pasting to the text field, the output has a prefix 'file://', it should be automatically removed
-		VOC1_INPUT_TEXT_PATH="$(echo "VOC1_INPUT_TEXT_PATH_ORIG" | awk -F 'file://' '{print $2}')"
+		##############################################################################################
+		#returns empty line if no file:// prefix
+		#VOC1_INPUT_TEXT_PATH="$(echo "VOC1_INPUT_TEXT_PATH_ORIG" | awk -F 'file://' '{print $2}')"
+		##############################################################################################
 fi
-input_text="$VOC1_INPUT_TEXT_PATH"
+#input_text="$VOC1_INPUT_TEXT_PATH"
+input_text="$VOC1_INPUT_TEXT_PATH_ORIG"
 
-cat "$input_text" | sed "s/[^a-zA-Z']/ /g" | tr ' ' '\n' | sed '/^\s*$/d' | sort | uniq >voc1-0text.list
+cat "$input_text" | sed "s/[^a-zA-Z']/ /g" | tr ' ' '\n' | sed '/^\s*$/d' | sort | uniq >voc1-0words.list
 
 type="$1"
 word="$2"
 if [[ $type = "ant" ]]
 	then
 		type_grep="Ant"
+	else
+		if [[ $type = "syn" ]]
+			then
+				type_grep="Syn"
+		fi
 fi
-if [[ $type = "syn" ]]
-	then
-		type_grep="Syn"
-fi
-
 while read line
 do
 	rm -fv voc1-1.list voc1-2.list voc1-3.list voc1-4.list
@@ -57,13 +61,13 @@ do
 		wn "$line" -synsv -synsn -synsa -synsa | grep '=>' | awk -F '=> ' '{print $2}' | tr ', ' '\n' | sed '/^\s*$/d' | sort | uniq >>voc1-3.list
 	done < voc1-2.list
 
-	# oh, and now we will find for each word's synonym in our first dictionary
+	# oh, and now we will look for for each word's synonym in our first dictionary
 	while read -r line
 	do
 		sdcv -n "$line" | grep "Syn:" -A1 | grep -v "Syn:" | grep -v '\-\-' | tr ',' ' ' | tr ';' ' ' | tr '/' ' ' | tr ',' ' ' | tr ' ' "\n" | sed '/^\s*$/d' | sort | uniq >>voc1-4.list
 		## sdcv -n "$line" | grep 'Syn:' -A1 | tail -n 1 | tr ',' ' ' | tr ';' ' ' | tr '/' ' ' | tr ',' ' ' | tr ' ' "\n" | sed '/^\s*$/d' | sort | uniq >>voc1-4.list
 	done < voc1-3.list
-done < voc1-0text.list
+done < voc1-0words.list
 
 cat voc1-4.list >>voc1-5total.list
 
