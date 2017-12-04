@@ -9,7 +9,7 @@
 export LANG=c
 cd /tmp || return
 # clean junk files from previous runs
-rm -fv voc1*.list
+rm -fv voc1*.list lynx*.txt
 
 # the path to the text file from which we have to solve the crossword puzzle is stored in the environmental variable
 # it allows to specify it only once in the session and reuse it automatically for all following words
