@@ -23,7 +23,7 @@ Another example: <br>
 ```voc1-script syn finalize co...e..``` : will do the same, but find synonyms for the word 'finalize', not antonyms
 
 See the screen video demo of ```voc1-script``` in real life usage. <br>
-[![IMAGE ALT TEXT](http://img.youtube.com/vi/W21oNV25odU/0.jpg)](http://www.youtube.com/watch?v=W21oNV25odU "voc1-script demo")
+[![CLICK HERE TO WATCH THE VIDEO DEMO](http://img.youtube.com/vi/W21oNV25odU/0.jpg)](http://www.youtube.com/watch?v=W21oNV25odU "voc1-script demo")
 
 Dependencies: <br>
 ```sudo apt install sdcv wordnet-base lynx``` <br>
