@@ -20,7 +20,7 @@ if [[ "$type" == "ant" ]]
 		type_grep_wn="ants"
 		type_grep_th="Antonyms"
 	else
-		if [[ type = "syn" ]]
+		if [[ "$type" == "syn" ]]
 			then
 				type_grep_sdcv="Syn"
 				type_grep_wn="syns"
