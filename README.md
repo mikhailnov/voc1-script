@@ -11,7 +11,7 @@ Usage:
 ```
 $ voc1-script [syn|ant] [word] [[grep mask]]
 ```
-ant - antonyms, syn - synonyms
+ant - antonyms, syn - synonyms <br>
 The grep mask may be not specified (empty).
 
 Example:
