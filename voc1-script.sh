@@ -10,16 +10,17 @@ cd /tmp || return
 # clean junk files from previous runs
 rm -fv voc1*.list lynx*.txt
 
+type="$1"
 word="$2"
 grep_exp="$3"
 
-if [[ $type = "ant" ]]
+if [[ "$type" == "ant" ]]
 	then
 		type_grep_sdcv="Ant"
 		type_grep_wn="ants"
 		type_grep_th="Antonyms"
 	else
-		if [[ $type = "syn" ]]
+		if [[ type = "syn" ]]
 			then
 				type_grep_sdcv="Syn"
 				type_grep_wn="syns"
@@ -27,34 +28,38 @@ if [[ $type = "ant" ]]
 		fi
 fi
 echo "======================="
-echo WORD/LINE: $line
+echo WORD/LINE: $word
+#for i in "$type_grep_sdcv" "$type_grep_sdcv" "$type_grep_sdcv"; do echo "$i"; done 
+echo $type_grep_sdcv
+echo $type_grep_wn
+echo $type_grep_th
 echo "======================="
 
 rm -fv voc1-1.list voc1-2.list
 # first, list all word's synonyms or antonyms to a file line-by-line
 sdcv -n "$word" | grep "${type_grep_sdcv}:" -A1 | grep -v "${type_grep_sdcv}:" | grep -v '\-\-' | tr ',' ' ' | tr ';' ' ' | tr '/' ' ' | tr ',' ' ' | tr ' ' "\n" | sed '/^\s*$/d' | sort | uniq | sed 's~[^[:alnum:]/]\+~~g' >voc1-1.list
-wn "$line" -${type_grep_wn}v -${type_grep_wn}n -${type_grep_wn}a -${type_grep_wn}a | grep '=>' | awk -F '=> ' '{print $2}' | tr ', ' '\n' | sed '/^\s*$/d' | sort | uniq | sed 's~[^[:alnum:]/]\+~~g' >>voc1-1.list
+wn "$word" -${type_grep_wn}v -${type_grep_wn}n -${type_grep_wn}a -${type_grep_wn}a | grep '=>' | awk -F '=> ' '{print $2}' | tr ', ' '\n' | sed '/^\s*$/d' | sort | uniq | sed 's~[^[:alnum:]/]\+~~g' >>voc1-1.list
 
 # Now let's parse the online Thesaurus dictionary
-lynx -dump -nolist http://www.thesaurus.com/browse/get >lynx-1.txt
+lynx -dump -nolist "http://www.thesaurus.com/browse/$word" >lynx-1.txt
 # sed '1d' removes the fisrt line of input (the first line will always be 'Synonyms' or 'Antonyms')
 # sed '/^\s*$/d' removes empty lines
 cat lynx-1.txt | grep -m 1 "${type_grep_th} for" -A50000 | sed '1d' | sed '/^\s*$/d' >lynx-2.txt
-while read -r line
+while read -r line2
 do
-	line_cleaned="$(echo "$line" | grep '* ' | awk -F '* ' '{print $2}')"
+	line2_cleaned="$(echo "$line2" | grep '* ' | awk -F '* ' '{print $2}')"
 	# if line_cleaned not empty
-	if [[ ! -z "$line_cleaned" ]]; then
-		echo "$line_cleaned" >>lynx-3.txt
+	if [[ ! -z "$line2_cleaned" ]]; then
+		echo "$line2_cleaned" >>lynx-3.txt
 	else break
 	fi
 done < lynx-2.txt
-cat lynx-3.txt >> voc1-1.list
+cat lynx-3.txt >> voc1-2.list
 
 # now find synonyms for every previously found word to enlarge the word base
-while read -r line
+while read -r line3
 do
-	sdcv -n "$line" | grep "Syn:" -A1 | grep -v "Syn:" | grep -v '\-\-' | tr ',' ' ' | tr ';' ' ' | tr '/' ' ' | tr ',' ' ' | tr ' ' "\n" | sed '/^\s*$/d' | sort | uniq | sed 's~[^[:alnum:]/]\+~~g' >>voc1-2.list
+	sdcv -n "$line3" | grep "Syn:" -A1 | grep -v "Syn:" | grep -v '\-\-' | tr ',' ' ' | tr ';' ' ' | tr '/' ' ' | tr ',' ' ' | tr ' ' "\n" | sed '/^\s*$/d' | sort | uniq | sed 's~[^[:alnum:]/]\+~~g' >>voc1-2.list
 	## sdcv -n "$line" | grep 'Syn:' -A1 | tail -n 1 | tr ',' ' ' | tr ';' ' ' | tr '/' ' ' | tr ',' ' ' | tr ' ' "\n" | sed '/^\s*$/d' | sort | uniq >>voc1-2.list
 done < voc1-1.list
 
