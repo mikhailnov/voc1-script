@@ -6,6 +6,10 @@ git clone https://github.com/mikhailnov/voc1-script.git
 sudo mv -v voc1-script.sh /usr/local/bin/voc1-script
 sudo chmod +x /usr/local/bin/voc1-script
 ```
+Dependencies: <br>
+```sudo apt install sdcv wordnet-base lynx p7zip``` <br>
++ a startdict dictionary 'Oxford Synonyms & Antonyms', find it and see ```man sdcv``` where it should be located (or write its location in an environmental variable, as written in ```man sdcv```) <br>
+Extract ```oxford_dictionary_of_synonyms_and_antonyms_for_stardict_gold.7z``` to ```~/.stardict/dic/``` to have a working dictionary for sdcv (this dictionary is distributed here for testing purposes only).
 
 Usage:
 ```
@@ -23,10 +27,5 @@ Another example: <br>
 
 See the screen video demo of ```voc1-script``` in real life usage. <br>
 [![CLICK HERE TO WATCH THE VIDEO DEMO](http://img.youtube.com/vi/W21oNV25odU/0.jpg)](http://www.youtube.com/watch?v=W21oNV25odU "voc1-script demo")
-
-Dependencies: <br>
-```sudo apt install sdcv wordnet-base lynx p7zip``` <br>
-+ a startdict dictionary 'Oxford Synonyms & Antonyms', find it and see ```man sdcv``` where it should be located (or write its location in an environmental variable, as written in ```man sdcv```) <br>
-Extract ```oxford_dictionary_of_synonyms_and_antonyms_for_stardict_gold.7z``` to ```~/.stardict/dic/``` to have a working dictionary for sdcv (this dictionary is distributed here for testing purposes only).
 
 As voc1-script also parses thesaurus.com, you may probably work without an sdcv's dictionary.
