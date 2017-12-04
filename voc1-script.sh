@@ -1,5 +1,5 @@
 #!/bin/bash 
-# Dependencies: sudo apt install sdcv wordnet-core lynx
+# Dependencies: sudo apt install sdcv wordnet-core lynx p7zip (p7zip for extracting the attached dictionary)
 # ...+ a startdict dictionary 'Oxford Synonyms & Antonyms', find it and see man sdcv where it should be located (or write its location in an environmental variable, as written in man sdcv), but you can probably go without it as voc1-script also parses an online dictionary at Thesaurus.com and uses WordNet
 
 # while writing this script I used spellcheck for statical analysis of my code, and helped to write it faster
