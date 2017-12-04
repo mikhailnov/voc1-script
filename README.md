@@ -8,7 +8,7 @@ sudo chmod +x /usr/local/bin/voc1-script
 ```
 Dependencies: <br>
 ```sudo apt install sdcv wordnet-base lynx p7zip``` <br>
-+ a startdict dictionary 'Oxford Synonyms & Antonyms', find it and see ```man sdcv``` where it should be located (or write its location in an environmental variable, as written in ```man sdcv```) <br>
+\+ a startdict dictionary 'Oxford Synonyms & Antonyms', find it and see ```man sdcv``` where it should be located (or write its location in an environmental variable, as written in ```man sdcv```) <br>
 Extract ```oxford_dictionary_of_synonyms_and_antonyms_for_stardict_gold.7z``` to ```~/.stardict/dic/``` to have a working dictionary for sdcv (this dictionary is distributed here for testing purposes only).
 
 Usage:
