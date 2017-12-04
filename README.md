@@ -21,3 +21,9 @@ The answer is 'complete'
 
 See the screen video demo of ```voc1-script``` in real life usage.
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/W21oNV25odU/0.jpg)](http://www.youtube.com/watch?v=W21oNV25odU "voc1-script demo")
+
+Dependencies:
+```sudo apt install sdcv wordnet-base lynx```
++ a startdict dictionary 'Oxford Synonyms & Antonyms', find it and see ```man sdcv``` where it should be located (or write its location in an environmental variable, as written in ```man sdcv```)
+
+As voc1-script also parses thesaurus.com, you may probably work without an sdcv's dictionary.
